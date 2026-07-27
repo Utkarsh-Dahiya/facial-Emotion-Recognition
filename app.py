@@ -349,7 +349,7 @@ def render_upload_column():
             st.markdown("</div>", unsafe_allow_html=True)
             return None
 
-        st.image(pil_image, caption="Preview", use_container_width=True)
+        st.image(pil_image, caption="Preview", width="stretch")
 
         st.markdown('<div class="section-eyebrow" style="margin-top:1rem;">Image Information</div>', unsafe_allow_html=True)
         w, h = pil_image.size
