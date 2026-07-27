@@ -1,4 +1,8 @@
-streamlit>=1.36
-tensorflow>=2.16
-numpy>=1.26
-Pillow>=10.0
+streamlit==1.36.0
+tensorflow-cpu==2.16.1
+numpy==1.26.4
+Pillow==10.3.0
+pandas==2.2.2
+matplotlib==3.9.0
+scikit-learn==1.5.1
+opencv-python-headless==4.10.0.84
