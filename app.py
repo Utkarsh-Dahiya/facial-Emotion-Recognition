@@ -1,6 +1,6 @@
 """
-Facial Emotion Recognition — Premium Streamlit Frontend
-=========================================================
+Facial Emotion Recognition — Premium Streamlit Frontend (Gold / Amber theme)
+=============================================================================
 A polished, SaaS-grade UI wrapped around a pretrained MobileNetV2
 Keras model (emotion_recognition.keras).
 
@@ -42,17 +42,17 @@ IMG_SIZE = (160, 160)  # matches the model's input_shape (160, 160, 3)
 EMOTION_CLASSES = ["Angry", "Disgust", "Fear", "Happy", "Neutral", "Sad", "Surprise"]
 
 EMOTION_META = {
-    "Happy":    {"emoji": "😀", "color": "#5EEAD4", "desc": "raised cheeks, a widened mouth, and relaxed brows"},
+    "Happy":    {"emoji": "😀", "color": "#FFD54F", "desc": "raised cheeks, a widened mouth, and relaxed brows"},
     "Sad":      {"emoji": "😢", "color": "#7DA6FF", "desc": "downturned lips, drooping eyelids, and inner brows pulled up"},
     "Angry":    {"emoji": "😠", "color": "#FF6B6B", "desc": "lowered, tightened brows and a firmly pressed mouth"},
     "Fear":     {"emoji": "😨", "color": "#C99BFF", "desc": "widened eyes, raised brows, and a tensed, pulled-back mouth"},
-    "Neutral":  {"emoji": "😐", "color": "#A0AEC0", "desc": "relaxed, symmetrical features with no strong muscle activation"},
+    "Neutral":  {"emoji": "😐", "color": "#B0B6C4", "desc": "relaxed, symmetrical features with no strong muscle activation"},
     "Disgust":  {"emoji": "🤢", "color": "#8AE68A", "desc": "a wrinkled nose, raised upper lip, and narrowed eyes"},
-    "Surprise": {"emoji": "😲", "color": "#FFD166", "desc": "raised brows, widened eyes, and a dropped-open jaw"},
+    "Surprise": {"emoji": "😲", "color": "#FFB300", "desc": "raised brows, widened eyes, and a dropped-open jaw"},
 }
 
 # ------------------------------------------------------------------
-# Global CSS — dark glassmorphism SaaS theme
+# Global CSS — dark gold/amber glassmorphism SaaS theme
 # ------------------------------------------------------------------
 def inject_css() -> None:
     st.markdown(
@@ -60,18 +60,19 @@ def inject_css() -> None:
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap');
 
-            #MainMenu, header, footer {visibility: hidden;}
+            #MainMenu, footer {visibility: hidden;}
             div[data-testid="stToolbar"] {visibility: hidden; height: 0;}
             div[data-testid="stDecoration"] {visibility: hidden;}
+            header[data-testid="stHeader"] {background: transparent;}
 
             html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 
             .stApp {
                 background:
-                    radial-gradient(circle at 15% 0%, rgba(124, 58, 237, 0.20), transparent 45%),
-                    radial-gradient(circle at 85% 15%, rgba(34, 211, 238, 0.14), transparent 45%),
-                    #0B0F19;
-                color: #E7EAF3;
+                    radial-gradient(circle at 15% 0%, rgba(255, 193, 7, 0.16), transparent 45%),
+                    radial-gradient(circle at 85% 15%, rgba(255, 111, 0, 0.12), transparent 45%),
+                    #0D0B07;
+                color: #F1EDE3;
             }
 
             .block-container { padding-top: 2rem; padding-bottom: 3rem; max-width: 1180px; }
@@ -88,52 +89,53 @@ def inject_css() -> None:
                 font-size: 3.1rem;
                 letter-spacing: -0.03em;
                 margin: 0;
-                background: linear-gradient(100deg, #A78BFA 0%, #7C3AED 35%, #22D3EE 100%);
+                background: linear-gradient(100deg, #FFE082 0%, #FFB300 45%, #FF8F00 100%);
                 -webkit-background-clip: text;
                 background-clip: text;
                 color: transparent;
             }
             .hero p.subtitle {
                 font-size: 1.08rem;
-                color: #9AA3B8;
+                color: #B7AD98;
                 margin-top: 0.65rem;
                 font-weight: 500;
             }
             .badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; margin-top: 1.4rem; }
             .badge {
-                background: rgba(255,255,255,0.05);
-                border: 1px solid rgba(255,255,255,0.09);
+                background: rgba(255,193,7,0.07);
+                border: 1px solid rgba(255,193,7,0.18);
                 backdrop-filter: blur(6px);
                 padding: 0.45rem 1rem;
                 border-radius: 999px;
                 font-size: 0.85rem;
                 font-weight: 600;
-                color: #C7CDE0;
+                color: #F0DFAE;
             }
 
-            /* ---------- Glass card ---------- */
-            .glass {
-                background: rgba(255,255,255,0.045);
-                border: 1px solid rgba(255,255,255,0.09);
+            /* ---------- Glass card (real container, not a split div) ---------- */
+            div[data-testid="stVerticalBlockBorderWrapper"]:has(div.card-anchor) {
+                background: rgba(255,193,7,0.045);
+                border: 1px solid rgba(255,193,7,0.14);
                 border-radius: 20px;
-                padding: 1.6rem 1.7rem;
+                padding: 0.4rem 0.5rem;
                 backdrop-filter: blur(14px);
-                box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+                box-shadow: 0 8px 30px rgba(0,0,0,0.35);
                 margin-bottom: 1.3rem;
             }
+            .card-anchor { display: none; }
             .glass h3 {
                 font-family: 'Sora', sans-serif;
                 font-size: 1.05rem;
                 font-weight: 700;
                 margin: 0 0 1rem 0;
-                color: #EDEFF7;
+                color: #FBEFD2;
             }
             .section-eyebrow {
                 text-transform: uppercase;
                 letter-spacing: 0.14em;
                 font-size: 0.72rem;
                 font-weight: 700;
-                color: #8B93AE;
+                color: #B7AD98;
                 margin-bottom: 0.3rem;
             }
 
@@ -142,8 +144,8 @@ def inject_css() -> None:
                 text-align: center;
                 padding: 1.9rem 1.4rem 1.6rem 1.4rem;
                 border-radius: 22px;
-                background: linear-gradient(160deg, rgba(124,58,237,0.16), rgba(34,211,238,0.08));
-                border: 1px solid rgba(255,255,255,0.10);
+                background: linear-gradient(160deg, rgba(255,179,0,0.18), rgba(255,111,0,0.08));
+                border: 1px solid rgba(255,193,7,0.20);
                 margin-bottom: 1.3rem;
             }
             .predict-emoji { font-size: 4.6rem; line-height: 1; }
@@ -152,17 +154,17 @@ def inject_css() -> None:
                 font-size: 1.9rem;
                 font-weight: 800;
                 margin-top: 0.3rem;
-                color: #FFFFFF;
+                color: #FFF4DA;
             }
-            .predict-confidence { font-size: 1rem; color: #B9C0D6; margin-top: 0.2rem; font-weight: 600; }
+            .predict-confidence { font-size: 1rem; color: #E3D2A3; margin-top: 0.2rem; font-weight: 600; }
 
             /* ---------- Progress bars ---------- */
             .bar-row { margin-bottom: 0.85rem; }
             .bar-row:last-child { margin-bottom: 0; }
             .bar-top { display: flex; justify-content: space-between; font-size: 0.88rem; margin-bottom: 0.3rem; }
-            .bar-name { font-weight: 600; color: #DCE0EE; }
-            .bar-name.top { color: #FFFFFF; }
-            .bar-pct { font-weight: 700; color: #C7CDE0; }
+            .bar-name { font-weight: 600; color: #E8DFC8; }
+            .bar-name.top { color: #FFE082; }
+            .bar-pct { font-weight: 700; color: #D8CBA6; }
             .bar-track {
                 width: 100%; height: 9px; border-radius: 999px;
                 background: rgba(255,255,255,0.07); overflow: hidden;
@@ -172,21 +174,21 @@ def inject_css() -> None:
             /* ---------- Info grid ---------- */
             .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
             .info-cell {
-                background: rgba(255,255,255,0.035);
-                border: 1px solid rgba(255,255,255,0.07);
+                background: rgba(255,193,7,0.035);
+                border: 1px solid rgba(255,193,7,0.10);
                 border-radius: 12px;
                 padding: 0.65rem 0.85rem;
             }
-            .info-cell .k { font-size: 0.72rem; color: #8B93AE; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
-            .info-cell .v { font-size: 0.98rem; color: #EDEFF7; font-weight: 700; margin-top: 0.15rem; }
+            .info-cell .k { font-size: 0.72rem; color: #B7AD98; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+            .info-cell .v { font-size: 0.98rem; color: #FBEFD2; font-weight: 700; margin-top: 0.15rem; }
 
             .explain-box {
-                border-left: 3px solid #7C3AED;
-                background: rgba(124,58,237,0.08);
+                border-left: 3px solid #FFB300;
+                background: rgba(255,179,0,0.09);
                 padding: 0.9rem 1.1rem;
                 border-radius: 10px;
                 font-size: 0.94rem;
-                color: #D6DAE8;
+                color: #ECE0C4;
                 line-height: 1.5;
             }
 
@@ -210,37 +212,61 @@ def inject_css() -> None:
             [data-testid="stFileUploader"] {
                 border-radius: 16px;
                 padding: 0.4rem;
-                background: rgba(255,255,255,0.03);
-                border: 1px dashed rgba(255,255,255,0.18);
+                background: rgba(255,193,7,0.03);
+                border: 1px dashed rgba(255,193,7,0.22);
             }
             [data-testid="stFileUploader"] section { background: transparent; }
 
             .footer {
                 text-align: center;
-                color: #7A8299;
+                color: #9C927C;
                 font-size: 0.88rem;
                 margin-top: 2.4rem;
                 padding-top: 1.4rem;
-                border-top: 1px solid rgba(255,255,255,0.07);
+                border-top: 1px solid rgba(255,193,7,0.12);
             }
-            .footer b { color: #C7CDE0; }
+            .footer b { color: #D8CBA6; }
 
             .stButton>button {
                 border-radius: 12px;
                 font-weight: 600;
-                border: 1px solid rgba(255,255,255,0.12);
-                background: linear-gradient(120deg, #7C3AED, #22D3EE);
-                color: white;
+                border: 1px solid rgba(255,193,7,0.18);
+                background: linear-gradient(120deg, #FFB300, #FF8F00);
+                color: #1A1200;
                 transition: transform 0.15s ease, box-shadow 0.15s ease;
             }
             .stButton>button:hover {
                 transform: translateY(-1px);
-                box-shadow: 0 6px 18px rgba(124,58,237,0.35);
+                box-shadow: 0 6px 18px rgba(255,179,0,0.35);
+            }
+
+            div[data-testid="stProgress"] div[role="progressbar"] > div {
+                background: linear-gradient(90deg, #FFD54F, #FF8F00);
             }
         </style>
         """,
         unsafe_allow_html=True,
     )
+
+
+def glass_card():
+    """Return a Streamlit container styled as a gold-glass card.
+
+    Using st.container(key=...) instead of a raw '<div>' opened in one
+    st.markdown() call and closed in another is what makes the styling
+    reliably wrap the *real* widgets (file_uploader, image, progress,
+    etc.) placed inside it — those widgets become actual DOM children
+    of the container, so backgrounds/borders/blur apply correctly and
+    nothing renders as an empty box or invisible content.
+    """
+    container = st.container(border=False, key=f"card_{glass_card.counter}")
+    glass_card.counter += 1
+    with container:
+        st.markdown('<div class="card-anchor"></div>', unsafe_allow_html=True)
+    return container
+
+
+glass_card.counter = 0
 
 
 # ------------------------------------------------------------------
@@ -326,164 +352,155 @@ def render_hero() -> None:
 
 
 def render_upload_column():
-    st.markdown('<div class="glass">', unsafe_allow_html=True)
-    st.markdown("<h3>📸 Upload a Face Image</h3>", unsafe_allow_html=True)
-    uploaded = st.file_uploader(
-        "Drag and drop a file here, or click to browse",
-        type=["jpg", "jpeg", "png"],
-        label_visibility="collapsed",
-    )
+    with glass_card():
+        st.markdown("<h3>📸 Upload a Face Image</h3>", unsafe_allow_html=True)
+        uploaded = st.file_uploader(
+            "Drag and drop a file here, or click to browse",
+            type=["jpg", "jpeg", "png"],
+            label_visibility="collapsed",
+        )
 
-    pil_image = None
-    if uploaded is not None:
-        raw_bytes = uploaded.getvalue()
-        try:
-            pil_image = Image.open(io.BytesIO(raw_bytes))
-            pil_image.load()
-        except (UnidentifiedImageError, OSError):
+        pil_image = None
+        if uploaded is not None:
+            raw_bytes = uploaded.getvalue()
+            try:
+                pil_image = Image.open(io.BytesIO(raw_bytes))
+                pil_image.load()
+            except (UnidentifiedImageError, OSError):
+                st.markdown(
+                    '<div class="warn-box">⚠️ That file couldn\'t be read as an image. '
+                    "Please upload a valid JPG or PNG.</div>",
+                    unsafe_allow_html=True,
+                )
+                return None
+
+            st.image(pil_image, caption="Preview", width="stretch")
+
+            st.markdown('<div class="section-eyebrow" style="margin-top:1rem;">Image Information</div>', unsafe_allow_html=True)
+            w, h = pil_image.size
             st.markdown(
-                '<div class="warn-box">⚠️ That file couldn\'t be read as an image. '
-                "Please upload a valid JPG or PNG.</div>",
+                f"""
+                <div class="info-grid">
+                    <div class="info-cell"><div class="k">Width</div><div class="v">{w}px</div></div>
+                    <div class="info-cell"><div class="k">Height</div><div class="v">{h}px</div></div>
+                    <div class="info-cell"><div class="k">File Size</div><div class="v">{human_file_size(len(raw_bytes))}</div></div>
+                    <div class="info-cell"><div class="k">Format</div><div class="v">{(pil_image.format or uploaded.type or "Unknown")}</div></div>
+                </div>
+                """,
                 unsafe_allow_html=True,
             )
-            st.markdown("</div>", unsafe_allow_html=True)
-            return None
+        else:
+            st.markdown(
+                '<p style="color:#B7AD98; font-size:0.9rem; margin-top:0.6rem;">'
+                "Supported formats: JPG, JPEG, PNG</p>",
+                unsafe_allow_html=True,
+            )
 
-        st.image(pil_image, caption="Preview", width="stretch")
-
-        st.markdown('<div class="section-eyebrow" style="margin-top:1rem;">Image Information</div>', unsafe_allow_html=True)
-        w, h = pil_image.size
-        st.markdown(
-            f"""
-            <div class="info-grid">
-                <div class="info-cell"><div class="k">Width</div><div class="v">{w}px</div></div>
-                <div class="info-cell"><div class="k">Height</div><div class="v">{h}px</div></div>
-                <div class="info-cell"><div class="k">File Size</div><div class="v">{human_file_size(len(raw_bytes))}</div></div>
-                <div class="info-cell"><div class="k">Format</div><div class="v">{(pil_image.format or uploaded.type or "Unknown")}</div></div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-    else:
-        st.markdown(
-            '<p style="color:#8B93AE; font-size:0.9rem; margin-top:0.6rem;">'
-            "Supported formats: JPG, JPEG, PNG</p>",
-            unsafe_allow_html=True,
-        )
-
-    st.markdown("</div>", unsafe_allow_html=True)
     return pil_image
 
 
 def render_prediction_column(model, pil_image) -> None:
-    st.markdown('<div class="glass">', unsafe_allow_html=True)
-    st.markdown("<h3>🔮 Prediction</h3>", unsafe_allow_html=True)
+    with glass_card():
+        st.markdown("<h3>🔮 Prediction</h3>", unsafe_allow_html=True)
 
-    if pil_image is None:
-        st.markdown(
-            '<p style="color:#8B93AE; font-size:0.92rem;">Upload an image on the left to '
-            "see the predicted emotion here.</p>",
-            unsafe_allow_html=True,
-        )
-        st.markdown("</div>", unsafe_allow_html=True)
-        return
-
-    if model is None:
-        st.markdown("</div>", unsafe_allow_html=True)
-        return
-
-    with st.spinner("Analyzing facial features..."):
-        try:
-            probs, elapsed_ms = run_prediction(model, pil_image)
-        except Exception as exc:  # noqa: BLE001 — surface any inference issue gracefully
+        if pil_image is None:
             st.markdown(
-                f'<div class="error-box">🚫 <b>Prediction failed.</b><br>'
-                f"The model could not process this image. Details: {type(exc).__name__}.</div>",
+                '<p style="color:#B7AD98; font-size:0.92rem;">Upload an image on the left to '
+                "see the predicted emotion here.</p>",
                 unsafe_allow_html=True,
             )
-            st.markdown("</div>", unsafe_allow_html=True)
             return
 
-    top_idx = int(np.argmax(probs))
-    top_label = EMOTION_CLASSES[top_idx]
-    top_conf = float(probs[top_idx])
-    meta = EMOTION_META[top_label]
+        if model is None:
+            return
 
-    st.markdown(
-        f"""
-        <div class="predict-card">
-            <div class="predict-emoji">{meta['emoji']}</div>
-            <div class="predict-label">{top_label}</div>
-            <div class="predict-confidence">Confidence: {top_conf * 100:.1f}%</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-    st.progress(min(max(top_conf, 0.0), 1.0))
+        with st.spinner("Analyzing facial features..."):
+            try:
+                probs, elapsed_ms = run_prediction(model, pil_image)
+            except Exception as exc:  # noqa: BLE001 — surface any inference issue gracefully
+                st.markdown(
+                    f'<div class="error-box">🚫 <b>Prediction failed.</b><br>'
+                    f"The model could not process this image. Details: {type(exc).__name__}.</div>",
+                    unsafe_allow_html=True,
+                )
+                return
 
-    st.markdown(
-        f"""
-        <div class="info-grid" style="margin-top:0.7rem;">
-            <div class="info-cell"><div class="k">Prediction Time</div><div class="v">{elapsed_ms:.0f} ms</div></div>
-            <div class="info-cell"><div class="k">Analyzed At</div><div class="v">{datetime.now().strftime('%H:%M:%S')}</div></div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+        top_idx = int(np.argmax(probs))
+        top_label = EMOTION_CLASSES[top_idx]
+        top_conf = float(probs[top_idx])
+        meta = EMOTION_META[top_label]
 
-    st.markdown('<div class="section-eyebrow" style="margin-top:1.2rem;">Why this result</div>', unsafe_allow_html=True)
-    st.markdown(
-        f'<div class="explain-box">{build_explanation(top_label, top_conf)}</div>',
-        unsafe_allow_html=True,
-    )
+        st.markdown(
+            f"""
+            <div class="predict-card">
+                <div class="predict-emoji">{meta['emoji']}</div>
+                <div class="predict-label">{top_label}</div>
+                <div class="predict-confidence">Confidence: {top_conf * 100:.1f}%</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.progress(min(max(top_conf, 0.0), 1.0))
 
-    st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown(
+            f"""
+            <div class="info-grid" style="margin-top:0.7rem;">
+                <div class="info-cell"><div class="k">Prediction Time</div><div class="v">{elapsed_ms:.0f} ms</div></div>
+                <div class="info-cell"><div class="k">Analyzed At</div><div class="v">{datetime.now().strftime('%H:%M:%S')}</div></div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+        st.markdown('<div class="section-eyebrow" style="margin-top:1.2rem;">Why this result</div>', unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="explain-box">{build_explanation(top_label, top_conf)}</div>',
+            unsafe_allow_html=True,
+        )
 
     render_probability_card(probs, top_label)
 
 
 def render_probability_card(probs: np.ndarray, top_label: str) -> None:
-    st.markdown('<div class="glass">', unsafe_allow_html=True)
-    st.markdown("<h3>📊 Emotion Probability Breakdown</h3>", unsafe_allow_html=True)
+    with glass_card():
+        st.markdown("<h3>📊 Emotion Probability Breakdown</h3>", unsafe_allow_html=True)
 
-    order = np.argsort(probs)[::-1]
-    rows_html = ""
-    for idx in order:
-        label = EMOTION_CLASSES[idx]
-        pct = float(probs[idx]) * 100
-        meta = EMOTION_META[label]
-        is_top = label == top_label
-        name_class = "bar-name top" if is_top else "bar-name"
-        rows_html += f"""
-        <div class="bar-row">
-            <div class="bar-top">
-                <span class="{name_class}">{meta['emoji']} {label}{' — Predicted' if is_top else ''}</span>
-                <span class="bar-pct">{pct:.1f}%</span>
+        order = np.argsort(probs)[::-1]
+        rows_html = ""
+        for idx in order:
+            label = EMOTION_CLASSES[idx]
+            pct = float(probs[idx]) * 100
+            meta = EMOTION_META[label]
+            is_top = label == top_label
+            name_class = "bar-name top" if is_top else "bar-name"
+            rows_html += f"""
+            <div class="bar-row">
+                <div class="bar-top">
+                    <span class="{name_class}">{meta['emoji']} {label}{' — Predicted' if is_top else ''}</span>
+                    <span class="bar-pct">{pct:.1f}%</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill" style="width:{pct:.1f}%; background:{meta['color']};"></div>
+                </div>
             </div>
-            <div class="bar-track">
-                <div class="bar-fill" style="width:{pct:.1f}%; background:{meta['color']};"></div>
-            </div>
-        </div>
-        """
-    st.markdown(rows_html, unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
+            """
+        st.markdown(rows_html, unsafe_allow_html=True)
 
 
 def render_model_info() -> None:
-    st.markdown('<div class="glass">', unsafe_allow_html=True)
-    st.markdown("<h3>⚙️ Model Information</h3>", unsafe_allow_html=True)
-    st.markdown(
-        """
-        <div class="info-grid">
-            <div class="info-cell"><div class="k">Model Name</div><div class="v">MobileNetV2</div></div>
-            <div class="info-cell"><div class="k">Input Size</div><div class="v">160 × 160</div></div>
-            <div class="info-cell"><div class="k">Classes</div><div class="v">7</div></div>
-            <div class="info-cell"><div class="k">Framework</div><div class="v">TensorFlow</div></div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-    st.markdown("</div>", unsafe_allow_html=True)
+    with glass_card():
+        st.markdown("<h3>⚙️ Model Information</h3>", unsafe_allow_html=True)
+        st.markdown(
+            """
+            <div class="info-grid">
+                <div class="info-cell"><div class="k">Model Name</div><div class="v">MobileNetV2</div></div>
+                <div class="info-cell"><div class="k">Input Size</div><div class="v">160 × 160</div></div>
+                <div class="info-cell"><div class="k">Classes</div><div class="v">7</div></div>
+                <div class="info-cell"><div class="k">Framework</div><div class="v">TensorFlow</div></div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
 
 def render_footer() -> None:
